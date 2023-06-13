@@ -1,13 +1,5 @@
 #!/bin/bash
 
-# Checking PHP
-if command -v php >/dev/null 2>&1; then
-    echo "PHP is already installed."
-else
-    echo "Installing PHP..."
-    apt-get install php -y
-fi
-
 # Checking MySQL Service
 if systemctl is-active --quiet mysql; then
     echo "MySQL service is already installed."
@@ -24,12 +16,28 @@ else
     apt-get install apache2 -y
 fi
 
+# Checking PHP
+if command -v php >/dev/null 2>&1; then
+    echo "PHP is already installed."
+else
+    echo "Installing PHP..."
+    apt-get install php -y
+fi
+
 # Removing existing web-source folder if it exists
 if [ -d "/tmp/web-source" ]; then
     echo "Removing existing web-source folder..."
     rm -rf /tmp/web-source
 fi
-                                
+
+# Checking Git
+if command -v git >/dev/null 2>&1; then
+    echo "Git is already installed."
+else
+    echo "Installing Git..."
+    apt-get install git -y
+fi
+
 # Cloning Web Source and Copying to Apache Web Folder
 echo "Cloning web source code..."
 git clone https://github.com/congminh1233/DBS.git /tmp/web-source
